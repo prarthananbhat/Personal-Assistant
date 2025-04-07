@@ -18,7 +18,19 @@ def int_list_to_exponential_sum(int_list):
     return sum([math.exp(num) for num in int_list])
 
 def fibonacci_numbers(n):
-    return [0, 1] + [fibonacci_numbers(n-1)[i-1] + fibonacci_numbers(n-1)[i-2] for i in range(2, n)]    
+    if type(n) == str:
+        n = int(n)
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    elif n == 2:
+        return [0, 1]
+    
+    fib = [0, 1]
+    for i in range(2, n):
+        fib.append(fib[i-1] + fib[i-2])
+    return fib
 
 def function_call(function_name, params):
     """Simple function caller maps function names to actual functions"""
@@ -52,7 +64,7 @@ DO NOT unclude multiple responses
 Give ONE responses at a time
 
 """
-current_query = """calculate the sum of exponentials of the word TSAI"""
+current_query = """calculate the sum of exponentials of the first 5 fibonacci numbers"""
 
 while(iter_call < max_iteration):
     print(f'\n\nIteration:{iter_call}')
@@ -67,7 +79,7 @@ while(iter_call < max_iteration):
         # prompt = f'{system_prompt}\n\nQuery:{current_query}\n\n{iteration_prompt}'
         prompt = "\n".join([prompt, iteration_prompt])
     
-    # print(f'\n\n{prompt}')
+    print(f'\n\n{prompt}')
 
     response = model.generate_content(prompt)
     

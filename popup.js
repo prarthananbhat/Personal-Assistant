@@ -26,10 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
     showMessage(message, 'user');
     userInput.value = '';
 
-    // Get API key from .env file
-    const apiKey = 'AIzaSyD5jmsstKV0Cyk1sqfpLWF-R1Yja_dJSZ4';
-
     try {
+      // Get API key from Chrome storage
+      const result = await chrome.storage.local.get(['geminiApiKey']);
+      const apiKey = result.geminiApiKey;
+
+      if (!apiKey) {
+        throw new Error('API key not found. Please set it in the extension settings.');
+      }
+
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: {

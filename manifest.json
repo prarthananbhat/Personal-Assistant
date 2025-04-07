@@ -2,12 +2,18 @@
   "manifest_version": 3,
   "name": "Gemini Chat Assistant",
   "version": "1.0",
-  "description": "A Chrome extension that provides a chat interface powered by Google's Gemini model",
-  "permissions": [],
+  "description": "A Chrome extension that integrates Gemini AI for chat assistance",
+  "permissions": [
+    "storage"
+  ],
   "action": {
     "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "web_accessible_resources": [{
+    "resources": [".env"],
+    "matches": ["<all_urls>"]
+  }]
 } 
